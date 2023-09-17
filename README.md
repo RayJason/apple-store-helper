@@ -1,5 +1,7 @@
 # Apple Store 预约助手
 
+[English](README-en.md)
+
 ## 支持 iPhone 15 系列
 
 ![UI](v1.5.1-light.png)

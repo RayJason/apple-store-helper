@@ -31,7 +31,7 @@ var Areas = []Area{
 		},
 	},
 	{
-		Title:     "中国香港",
+		Title:     "中國香港",
 		ShortCode: "hk-zh", // hk
 		Locale:    "zh_HK",
 		ProductsJson: []string{
@@ -42,7 +42,7 @@ var Areas = []Area{
 		},
 	},
 	{
-		Title:     "中国台湾",
+		Title:     "中國台灣",
 		ShortCode: "tw",
 		Locale:    "zh_TW",
 		ProductsJson: []string{
@@ -53,7 +53,7 @@ var Areas = []Area{
 		},
 	},
 	{
-		Title:     "新加坡",
+		Title:     "Singapore",
 		ShortCode: "sg",
 		Locale:    "en_SG",
 		ProductsJson: []string{
@@ -64,7 +64,7 @@ var Areas = []Area{
 		},
 	},
 	{
-		Title:     "日本",
+		Title:     "にほん",
 		ShortCode: "jp",
 		Locale:    "ja_JP",
 		ProductsJson: []string{

@@ -28,12 +28,12 @@ import (
 )
 
 const (
-	StatusOutStock = "无货"
-	StatusInStock  = "有货"
-	StatusWait     = "等待"
+	StatusOutStock = "Unavailable"
+	StatusInStock  = "Available"
+	StatusWait     = "Waiting"
 
-	Pause   = "暂停"
-	Running = "监听中"
+	Pause   = "Pause"
+	Running = "Searching"
 )
 
 var Listen = listenService{
@@ -134,14 +134,14 @@ func (s *listenService) Run() {
 						var bagUrl = fmt.Sprintf("https://www.apple.com/%s/shop/bag", s.Area.ShortCode)
 						// 进入购物袋
 						s.openBrowser(bagUrl)
-						msg := fmt.Sprintf("%s %s 有货", item.Store.CityStoreName, item.Product.Title)
-						dialog.ShowInformation("匹配成功", msg, view.Window)
+						msg := fmt.Sprintf("%s %s is available", item.Store.CityStoreName, item.Product.Title)
+						dialog.ShowInformation("Success", msg, view.Window)
 						view.App.SendNotification(&fyne.Notification{
-							Title:   "有货提醒",
+							Title:   "Available!",
 							Content: msg,
 						})
 						go s.AlertMp3()
-						go s.SendPushNotificationByBark("有货提醒", msg, bagUrl)
+						go s.SendPushNotificationByBark("Availability Alert", msg, bagUrl)
 						break
 					} else {
 						s.UpdateStatus(key, StatusOutStock)

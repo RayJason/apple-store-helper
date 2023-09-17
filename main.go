@@ -28,11 +28,11 @@ func main() {
 
 	// 门店选择器 (Store Selector)
 	storeWidget := widget.NewSelect(services.Store.ByAreaTitleForOptions(defaultArea), nil)
-	storeWidget.PlaceHolder = "请选择自提门店"
+	storeWidget.PlaceHolder = "Please select a pick-up store"
 
 	// 型号选择器 (Product Selector)
 	productWidget := widget.NewSelect(services.Product.ByAreaTitleForOptions(defaultArea), nil)
-	productWidget.PlaceHolder = "请选择 iPhone 型号"
+	productWidget.PlaceHolder = "Please select an iPhone model"
 
 	// Bark 通知输入框
 	barkWidget := widget.NewEntry()
@@ -52,9 +52,9 @@ func main() {
 
 	areaWidget.Horizontal = true
 
-	help := `1. 在 Apple 官网将需要购买的型号加入购物车
-2. 选择地区、门店和型号，点击“添加”按钮，将需要监听的型号添加到监听列表
-3. 点击“开始”按钮开始监听，检测到有货时会自动打开购物车页面
+	help := `1. Add the model you wish to purchase to your cart on the Apple official website.
+2. Select your region, store, and model, then click the "Add" button to add the models you'd like to monitor to the tracking list.
+3. Click the "Start" button to begin monitoring. The cart page will automatically open when stock is available.
 `
 
 	loadUserSettingsCache(areaWidget, storeWidget, productWidget, barkWidget)
@@ -62,10 +62,10 @@ func main() {
 	// 初始化 GUI 窗口内容 (Initialize GUI)
 	view.Window.SetContent(container.NewVBox(
 		widget.NewLabel(help),
-		container.New(layout.NewFormLayout(), widget.NewLabel("选择地区:"), areaWidget),
-		container.New(layout.NewFormLayout(), widget.NewLabel("选择门店:"), storeWidget),
-		container.New(layout.NewFormLayout(), widget.NewLabel("选择型号:"), productWidget),
-		container.New(layout.NewFormLayout(), widget.NewLabel("Bark 通知地址"), barkWidget),
+		container.New(layout.NewFormLayout(), widget.NewLabel("Select Region:"), areaWidget),
+		container.New(layout.NewFormLayout(), widget.NewLabel("Select Store:"), storeWidget),
+		container.New(layout.NewFormLayout(), widget.NewLabel("Select Model:"), productWidget),
+		container.New(layout.NewFormLayout(), widget.NewLabel("Bark Notification Address"), barkWidget),
 
 		container.NewBorder(nil, nil,
 			createActionButtons(areaWidget, storeWidget, productWidget, barkWidget),
@@ -113,9 +113,9 @@ func loadUserSettingsCache(areaWidget *widget.RadioGroup, storeWidget *widget.Se
 // 创建动作按钮 (Create action buttons)
 func createActionButtons(areaWidget *widget.RadioGroup, storeWidget *widget.Select, productWidget *widget.Select, barkNotifyWidget *widget.Entry) *fyne.Container {
 	return container.NewHBox(
-		widget.NewButton("添加", func() {
+		widget.NewButton("Add", func() {
 			if storeWidget.Selected == "" || productWidget.Selected == "" {
-				dialog.ShowError(errors.New("请选择门店和型号"), view.Window)
+				dialog.ShowError(errors.New("Please select store and model"), view.Window)
 			} else {
 				services.Listen.Add(areaWidget.Selected, storeWidget.Selected, productWidget.Selected, barkNotifyWidget.Text)
 				services.SaveSettings(services.UserSettings{
@@ -127,16 +127,16 @@ func createActionButtons(areaWidget *widget.RadioGroup, storeWidget *widget.Sele
 				})
 			}
 		}),
-		widget.NewButton("清空", func() {
+		widget.NewButton("Reset", func() {
 			services.Listen.Clean()
 			services.ClearSettings()
 		}),
-		widget.NewButton("试听(有货提示音)", func() {
+		widget.NewButton("Try it out (prompt sound when in stock)", func() {
 			go services.Listen.AlertMp3()
 		}),
-		widget.NewButton("测试 Bark 通知", func() {
+		widget.NewButton("Try Bark notification", func() {
 			services.Listen.BarkNotifyUrl = barkNotifyWidget.Text
-			services.Listen.SendPushNotificationByBark("有货提醒（测试）", "此为测试提醒，点击通知将跳转到相关链接", "https://www.apple.com.cn/")
+			services.Listen.SendPushNotificationByBark("In stock reminder (test)", "This is a test reminder. Clicking on the notification will redirect you to the relevant link", "https://www.apple.com.cn/")
 		}),
 	)
 }
@@ -144,13 +144,13 @@ func createActionButtons(areaWidget *widget.RadioGroup, storeWidget *widget.Sele
 // 创建控制按钮 (Create control buttons)
 func createControlButtons() *fyne.Container {
 	return container.NewHBox(
-		widget.NewButton("开始", func() {
+		widget.NewButton("Start", func() {
 			services.Listen.Status.Set(services.Running)
 		}),
-		widget.NewButton("暂停", func() {
+		widget.NewButton("Pause", func() {
 			services.Listen.Status.Set(services.Pause)
 		}),
-		container.NewCenter(widget.NewLabel("状态:")),
+		container.NewCenter(widget.NewLabel("Status:")),
 		container.NewCenter(widget.NewLabelWithData(services.Listen.Status)),
 	)
 }
