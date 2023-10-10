@@ -46,12 +46,15 @@ Change `GOROOT` to your actual GO installation directory.
 4. Click the `Start` button to begin monitoring. The cart page will automatically open when stock is detected.
 5. Monitoring will automatically pause when stock is found, until you click `Start` again.
 
+### Push notifications to iOS devices when in stock
+1. Download and install the app "Bark" from the App Store. Allow "Bark" to push notifications.
+2. Open Bark, copy the address in the app that represents your device (like ` https://api.day.app/xxxxxxxxx `). Paste it into the `Bark Notification Address` field of the app.
+3. Tap `Test Bark Notification` to make sure the app can notify your iOS device.
+4. For more information, please refer to `https://bark.day.app/`.
+
 ## Contributors
 - [@Hteen](https://github.com/hteen)
 - [@Timssse](https://github.com/Timssse)
 - [@Black-Hole](https://github.com/BlackHole1)
 - [@RayJason](https://github.com/RayJason)
-
-## ☕️
-
-<img src='https://tva1.sinaimg.cn/large/0081Kckwly1gls6d2nnicj30i00pcq9i.jpg' width='200px'/>
+- [@Warkeeper](https://github.com/Warkeeper)
